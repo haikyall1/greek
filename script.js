@@ -31,22 +31,32 @@ function toggleFlower(rowId) {
     $("#" + rowId).toggleClass("hidden");
 }
 
-function showArmor(type) {
-    $(".armor").addClass("hidden");
-    $("#" + type).removeClass("hidden");
-
-    let info = '';
-    if (type === 'Arrow') {
-        info = 'Arrow: Lightweight, precise, and often used for ranged attacks.';
-    } else if (type === 'Sword') {
-        info = 'Sword: A classic melee weapon, symbol of honor and skill.';
-    } else if (type === 'Armor') {
-        info = 'Armor: Defensive gear that protects against enemy attacks.';
+$(document).ready(function() {
+    function createPopover(text, button) {
+        $('.popover-info').remove();
+        var popover = $('<div class="popover-info"></div>').text(text);
+        $(button).after(popover);
+        popover.hide().fadeIn(300);
     }
 
-    $("#armor-info-popover").text(info).removeClass("hidden");
+    $('button[onclick*="showArmor(\'Arrow\')"]').click(function(e) {
+        e.stopPropagation();
+        createPopover('Arrows: Swift and accurate, ideal for long-range attacks.', this);
+    });
 
-    setTimeout(function () {
-        $("#armor-info-popover").addClass("hidden");
-    }, 3000);
-}
+    $('button[onclick*="showArmor(\'Sword\')"]').click(function(e) {
+        e.stopPropagation();
+        createPopover('Swords: Versatile melee weapons for close combat.', this);
+    });
+
+    $('button[onclick*="showArmor(\'Armor\')"]').click(function(e) {
+        e.stopPropagation();
+        createPopover('Armor: Provides essential protection during battles.', this);
+    });
+
+    $(document).click(function() {
+        $('.popover-info').fadeOut(200, function() {
+            $(this).remove();
+        });
+    });
+});
