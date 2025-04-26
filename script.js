@@ -53,3 +53,23 @@ function showArmor(rowId) {
       selectedArmor.classList.remove('hidden');
   }
 }
+
+function showArmor(type) {
+    $('.armor').addClass('hidden');
+    $('#' + type).removeClass('hidden');
+
+    let info = '';
+    if (type === 'Arrow') {
+        info = 'Arrow: Lightweight, precise, and often used for ranged attacks.';
+    } else if (type === 'Sword') {
+        info = 'Sword: A classic melee weapon, symbol of honor and skill.';
+    } else if (type === 'Armor') {
+        info = 'Armor: Defensive gear that protects against enemy attacks.';
+    }
+
+    $('#armor-info-popover').text(info).removeClass('hidden');
+
+    setTimeout(function () {
+        $('#armor-info-popover').addClass('hidden');
+    }, 3000);
+}
